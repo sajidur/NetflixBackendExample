@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -6,14 +7,16 @@ using NetflixRepository;
 
 namespace NetflixBackendExample.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
     {
         private readonly IMovieRepository _movieRepository;
         private readonly CloudBlobContainer _container;
+        private readonly ILogger<MoviesController> _logger;
 
-        public MoviesController(IConfiguration configuration, IMovieRepository movieRepository)
+        public MoviesController(IConfiguration configuration, IMovieRepository movieRepository, ILogger<MoviesController> logger)
         {
             _movieRepository = movieRepository;
 
@@ -28,6 +31,7 @@ namespace NetflixBackendExample.Controllers
 
             // Get reference to the container where movie files are stored
             _container = blobClient.GetContainerReference("movies");
+            _logger = logger;
         }
 
         [HttpGet]
@@ -40,6 +44,7 @@ namespace NetflixBackendExample.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogCritical(ex.ToString());
                 return StatusCode(500, ex.Message);
             }
         }
@@ -57,15 +62,16 @@ namespace NetflixBackendExample.Controllers
                 }
 
                 // Generate a SAS (Shared Access Signature) token for the movie file
-                var sasToken = GetMovieSasToken(movie.FileName);
+                var sasToken = GetMovieSasToken(movie.Title);
 
                 // Create a URI with the SAS token for the movie file
-                var movieUri = $"{movie.FileName}{sasToken}";
+                var movieUri = $"{movie.Title}{sasToken}";
 
                 return Ok(movieUri);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical(ex.ToString());
                 return StatusCode(500, ex.Message);
             }
         }
