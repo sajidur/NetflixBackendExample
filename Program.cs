@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using NetflixBackendExample;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,7 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
