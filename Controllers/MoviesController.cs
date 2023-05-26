@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using NetflixRepository;
+using NetflixRepository.Entity;
 
 namespace NetflixBackendExample.Controllers
 {
