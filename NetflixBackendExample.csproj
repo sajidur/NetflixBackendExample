@@ -10,6 +10,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NetflixModels\**" />
+    <Compile Remove="UserManagementRepository\**" />
+    <Compile Remove="UserManagementService\**" />
+    <Compile Remove="UserManagement\**" />
+    <Content Remove="NetflixModels\**" />
+    <Content Remove="UserManagementRepository\**" />
+    <Content Remove="UserManagementService\**" />
+    <Content Remove="UserManagement\**" />
+    <EmbeddedResource Remove="NetflixModels\**" />
+    <EmbeddedResource Remove="UserManagementRepository\**" />
+    <EmbeddedResource Remove="UserManagementService\**" />
+    <EmbeddedResource Remove="UserManagement\**" />
+    <None Remove="NetflixModels\**" />
+    <None Remove="UserManagementRepository\**" />
+    <None Remove="UserManagementService\**" />
+    <None Remove="UserManagement\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
@@ -17,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetflixModels\NetflixRepository.csproj" />
+    <ProjectReference Include="NetflixModels\NetflixRepository.csproj" />
   </ItemGroup>
 
 </Project>
