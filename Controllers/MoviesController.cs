@@ -36,11 +36,11 @@ namespace NetflixBackendExample.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllMovies()
+        public IActionResult GetAllMovies(int userId)
         {
             try
             {
-                IEnumerable<Movie> movies = _movieRepository.GetAllMovies();
+                IEnumerable<Movie> movies = _movieRepository.GetAllMovies(userId);
                 return Ok(movies);
             }
             catch (Exception ex)
